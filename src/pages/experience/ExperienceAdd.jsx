@@ -1,118 +1,59 @@
-import { Field, FieldArray, Form, Formik } from "formik";
-import { Button, FormField, Input, TextArea } from "semantic-ui-react";
+import { ErrorMessage, Field, Formik } from "formik";
+import { Button, Form, FormField, Label } from "semantic-ui-react";
 
 export default function ExperienceAdd() {
-  const initialValues = {
-    experiences: [
-      {
-        positionName: "",
-        description: "",
-        company: "",
-        startDate: "",
-        endDate: "",
-      },
-    ],
-  };
+  let initialValue = {
+    positionName: "",
+    company: "",
+    description: "",
+    startDate: "",
+    endDate: ""
+  }
+
   return (
     <div>
-      <p className="page-title">Deneyimleri Düzenle</p>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
+      <p className="page-title">Proje Ekle</p>
 
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form className="ui form">
-            <FieldArray name="experiences">
-              {({ push, remove }) => (
-                <div>
-                  {values.experiences.map((exp, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        padding: "1rem",
-                        border: "1px solid #ccc",
-                        marginBottom: "1rem",
-                        borderRadius: "10px",
-                        backgroundColor: "#fefefe",
-                      }}
-                    >
-                      <h4>Deneyim {index + 1}</h4>
-                      <Button
-                        type="button"
-                        color="red"
-                        floated="right"
-                        size="tiny"
-                        onClick={() => remove(index)}
-                      >
-                        Sil
-                      </Button>
+      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { }}>
+        <Form className="ui form">
+          <FormField>
+            <Field name="positionName" placeholder="Pozisyon adı"></Field>
+            <ErrorMessage name="positionName" render={error =>
+              <Label pointing basic color="red" content={error}></Label>
+            }></ErrorMessage>
+          </FormField>
 
-                      {/* Pozisyon */}
-                      <FormField>
-                        <Field
-                          name={`experiences.${index}.positionName`}
-                          placeholder="Pozisyon"
-                          as={Input}
-                        />
-                      </FormField>
+          <FormField>
+            <Field name="description" placeholder="Açıklama"></Field>
+            <ErrorMessage name="description" render={error =>
+              <Label pointing basic color="red" content={error}></Label>
+            }></ErrorMessage>
+          </FormField>
 
-                      {/* Şirket */}
-                      <FormField>
-                        <Field
-                          name={`experiences.${index}.company`}
-                          placeholder="Şirket"
-                          as={Input}
-                        />
-                      </FormField>
+          <FormField>
+            <Field name="company" placeholder="Şirket adı"></Field>
+            <ErrorMessage name="company" render={error =>
+              <Label pointing basic color="red" content={error}></Label>
+            }></ErrorMessage>
+          </FormField>
 
-                      {/* Açıklama */}
-                      <FormField>
-                        <Field
-                          name={`experiences.${index}.description`}
-                          placeholder="Açıklama"
-                          as={TextArea}
-                          rows={3}
-                        />
-                      </FormField>
+          <FormField>
+            <Field name="startDate" placeholder="Başlangıç Tarihi"></Field>
+            <ErrorMessage name="startDate" render={error =>
+              <Label pointing basic color="red" content={error}></Label>
+            }></ErrorMessage>
+          </FormField>
 
-                      {/* Başlangıç Tarihi */}
-                      <FormField>
-                        <Field
-                          name={`experiences.${index}.startDate`}
-                          type="date"
-                          as={Input}
-                        />
-                      </FormField>
+          <FormField>
+            <Field name="endDate" placeholder="Bitiş Tarihi"></Field>
+            <ErrorMessage name="endDate" render={error =>
+              <Label pointing basic color="red" content={error}></Label>
+            }></ErrorMessage>
+          </FormField>
 
-                      {/* Bitiş Tarihi */}
-                      <FormField>
-                        <Field
-                          name={`experiences.${index}.endDate`}
-                          type="date"
-                          as={Input}
-                        />
-                      </FormField>
-                    </div>
-                  ))}
-
-                  <Button
-                    type="button"
-                    color="blue"
-                    onClick={() => push(initialValues.experiences[0])}
-                  >
-                    Yeni Deneyim Ekle
-                  </Button>
-                </div>
-              )}
-            </FieldArray>
-
-            <Button type="submit" color="green" style={{ marginTop: "1rem" }}>
-              Kaydet
-            </Button>
-          </Form>
-        )}
+          <Button color="green" type="submit">Ekle</Button>
+        </Form>
       </Formik>
-    </div>)
+    </div>
+  )
 }
