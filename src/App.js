@@ -1,11 +1,11 @@
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
-import LoginPage from './pages/LoginPage';
+import AdminDashboard from './layouts/AdminDashboard';
 
 function App() {
   return (
     <div className="App">
-      <LoginPage />
+      <AdminDashboard />
     </div>
   );
 }
