@@ -1,21 +1,18 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import ProjectService from "../../service/projectService";
 
 export default function ProjectsPage() {
 
-  const projects = [
-    {
-      title: "Portfolio Admin Panel",
-      summary: "Portfolio projesinin admin paneli",
-      description: "Bu panel ile kişisel blogunu kolayca yönetebilirsin",
-      features: ["React ile frontend app", "Spring boot ile backend app", "Admin panel"],
-      projectDate: "",
-      techStack: ["java", "refis"],
-      liveDemoUrl: "",
-      sourceCodeUrl: "",
-      coverImage: "",
-    }
-  ];
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const service = new ProjectService()
+    service.getProjects().then(r => {
+      setProjects(r);
+    });
+  });
 
   return (
     <div>

@@ -1,18 +1,18 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import EducationService from "../../service/educationService";
 
 export default function EducationPage() {
 
-  const educations = [
-    {
-      id: 1,
-      major: "Computer Science",
-      school: "Dumlupinar University",
-      description: "Worked on developing web applications.",
-      startDate: "2020-01-01",
-      endDate: "2021-12-31"
-    }
-  ];
+  const [educations, setEducations] = useState([]);
+
+  useEffect(() => {
+    const service = new EducationService()
+    service.getEducations().then(r => {
+      setEducations(r);
+    });
+  });
 
   return (
     <div>

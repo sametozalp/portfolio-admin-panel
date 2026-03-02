@@ -1,18 +1,18 @@
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import ExperienceService from "../../service/experienceService";
 
 export default function ExperiencePage() {
 
-    const experiences = [
-        {
-            id: 1,
-            positionName: "Software Engineer",
-            company: "Tech Company",
-            description: "Worked on developing web applications.",
-            startDate: "2020-01-01",
-            endDate: "2021-12-31"
-        }
-    ];
+    const [experiences, setExperiences] = useState([]);
+
+    useEffect(() => {
+        const service = new ExperienceService()
+        service.getExperiences().then(r => {
+            setExperiences(r);
+        });
+    });
 
     return (
         <div>
