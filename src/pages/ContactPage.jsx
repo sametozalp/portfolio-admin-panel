@@ -28,7 +28,8 @@ export default function ContactPage() {
             <ErrorMessage name="myEmail" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          <Button color="green" type="submit">Submit</Button>
+          <Button color="green" type="submit">Ekle</Button>
+          <Button color="gray" type="submit">Güncelle</Button>
         </Form>
       </Formik>
     </div>
