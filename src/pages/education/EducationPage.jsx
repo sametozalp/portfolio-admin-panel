@@ -1,103 +1,52 @@
-import { Field, FieldArray, Form, Formik } from "formik";
-import { Button, FormField, Input, TextArea } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 
 export default function EducationPage() {
 
-  const initialValues = {
-    educations: [
-      {
-        positionName: "",
-        description: "",
-        school: "",
-        startDate: "",
-        endDate: "",
-      },
-    ],
-  };
-
+  const educations = [
+    {
+      id: 1,
+      major: "Computer Science",
+      school: "Dumlupinar University",
+      description: "Worked on developing web applications.",
+      startDate: "2020-01-01",
+      endDate: "2021-12-31"
+    }
+  ];
 
   return (
     <div>
-      <p className="page-title">Eğitimleri Düzenle</p>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
+      <p className="page-title">Eğitimleri Yönet</p>
+      <Button content="Yeni Eğitim Ekle" icon="add" labelPosition="" style={{ float: "right", marginBottom: "1.5rem" }} as={NavLink} to="add" />
 
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form className="ui form">
-            <FieldArray name="educations">
-              {({ push, remove }) => (
-                <div>
-                  {values.educations.map((edu, index) => (
-                    <div key={index} style={{ padding: "1rem", border: "1px solid #ccc", marginBottom: "1rem", borderRadius: "10px", backgroundColor: "#fefefe" }}>
-                      <h4>Eğitim {index + 1}</h4>
-                      <Button type="button" color="red" floated="right" size="tiny" onClick={() => remove(index)}>
-                        Sil
-                      </Button>
+      <Table singleLine>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>Bölüm</TableHeaderCell>
+            <TableHeaderCell>Okul</TableHeaderCell>
+            <TableHeaderCell>Açıklama</TableHeaderCell>
+            <TableHeaderCell>Başlangıç Zamanı</TableHeaderCell>
+            <TableHeaderCell>Bitiş Zamanı</TableHeaderCell>
+            <TableHeaderCell>Aksiyonlar</TableHeaderCell>
+          </TableRow>
+        </TableHeader>
 
-                      {/* Pozisyon / Bölüm */}
-                      <FormField>
-                        <Field
-                          name={`educations.${index}.positionName`}
-                          placeholder="Pozisyon / Bölüm"
-                          as={Input}
-                        />
-                      </FormField>
-
-                      {/* Açıklama */}
-                      <FormField>
-                        <Field
-                          name={`educations.${index}.description`}
-                          placeholder="Açıklama"
-                          as={TextArea}
-                          rows={3}
-                        />
-                      </FormField>
-
-                      {/* Okul */}
-                      <FormField>
-                        <Field
-                          name={`educations.${index}.school`}
-                          placeholder="Okul"
-                          as={Input}
-                        />
-                      </FormField>
-
-                      {/* Başlangıç Tarihi */}
-                      <FormField>
-                        <Field
-                          name={`educations.${index}.startDate`}
-                          type="date"
-                          as={Input}
-                        />
-                      </FormField>
-
-                      {/* Bitiş Tarihi */}
-                      <FormField>
-                        <Field
-                          name={`educations.${index}.endDate`}
-                          type="date"
-                          as={Input}
-                        />
-                      </FormField>
-                    </div>
-                  ))}
-
-                  <Button type="button" color="blue" onClick={() => push(initialValues.educations[0])}>
-                    Yeni Eğitim Ekle
-                  </Button>
-                </div>
-              )}
-            </FieldArray>
-
-            <Button type="submit" color="green" style={{ marginTop: "1rem" }}>
-              Kaydet
-            </Button>
-          </Form>
-        )}
-      </Formik>
+        <TableBody>
+          {educations.map((e, index) => (
+            <TableRow>
+              <TableCell>{e.major}</TableCell>
+              <TableCell>{e.school}</TableCell>
+              <TableCell>{e.description.substring(0, 30)}...</TableCell>
+              <TableCell>{e.startDate}</TableCell>
+              <TableCell>{e.endDate}</TableCell>
+              <TableCell>
+                <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
+                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }

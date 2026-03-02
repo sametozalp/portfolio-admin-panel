@@ -22,12 +22,12 @@ export default function ExperiencePage() {
             <Table singleLine>
                 <TableHeader>
                     <TableRow>
-                        <TableHeaderCell>Position Name</TableHeaderCell>
-                        <TableHeaderCell>Company</TableHeaderCell>
-                        <TableHeaderCell>Description</TableHeaderCell>
-                        <TableHeaderCell>Start Date</TableHeaderCell>
-                        <TableHeaderCell>End Date</TableHeaderCell>
-                        <TableHeaderCell>Actions</TableHeaderCell>
+                        <TableHeaderCell>Pozisyon Adı</TableHeaderCell>
+                        <TableHeaderCell>Şirket</TableHeaderCell>
+                        <TableHeaderCell>Açıklama</TableHeaderCell>
+                        <TableHeaderCell>Başlangıç Zamanı</TableHeaderCell>
+                        <TableHeaderCell>Bitiş Zamanı</TableHeaderCell>
+                        <TableHeaderCell>Aksiyonlar</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
 

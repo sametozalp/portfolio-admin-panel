@@ -1,132 +1,51 @@
-import { Field, FieldArray, Form, Formik } from "formik";
-import { Button, FormField, Input, TextArea } from "semantic-ui-react";
+import { NavLink } from "react-router-dom";
+import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 
 export default function ProjectsPage() {
-  const initialValues = {
-    projects: [
-      {
-        title: "",
-        summary: "",
-        description: "",
-        features: [],
-        projectDate: "",
-        techStack: [],
-        liveDemoUrl: "",
-        sourceCodeUrl: "",
-        coverImage: "",
-      },
-    ],
-  };
+
+  const projects = [
+    {
+      title: "Portfolio Admin Panel",
+      summary: "Portfolio projesinin admin paneli",
+      description: "Bu panel ile kişisel blogunu kolayca yönetebilirsin",
+      features: ["React ile frontend app", "Spring boot ile backend app", "Admin panel"],
+      projectDate: "",
+      techStack: ["java", "refis"],
+      liveDemoUrl: "",
+      sourceCodeUrl: "",
+      coverImage: "",
+    }
+  ];
+
   return (
     <div>
-      <p className="page-title">Projeleri Düzenle</p>
+      <p className="page-title">Projeleri Yönet</p>
+      <Button content="Yeni Proje Ekle" icon="add" labelPosition="" style={{ float: "right", marginBottom: "1.5rem" }} as={NavLink} to="add" />
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => {
-          console.log("Submitted Projects:", values);
-        }}
-      >
-        {({ values, handleChange }) => (
-          <Form className="ui form">
+      <Table singleLine>
+        <TableHeader>
+          <TableRow>
+            <TableHeaderCell>Adı</TableHeaderCell>
+            <TableHeaderCell>Özeti</TableHeaderCell>
+            <TableHeaderCell>Açıklama</TableHeaderCell>
+            <TableHeaderCell>Aksiyonlar</TableHeaderCell>
+          </TableRow>
+        </TableHeader>
 
-            <FieldArray name="projects">
-              {({ push, remove }) => (
-                <div>
-                  {values.projects.map((project, index) => (
-                    <div key={index} style={{ padding: "1rem", border: "1px solid #ccc", marginBottom: "1rem", borderRadius: "10px", backgroundColor: "#fefefe" }}>
-                      <h4>Proje {index + 1}</h4>
-                      <Button type="button" color="red" floated="right" size="tiny" onClick={() => remove(index)}>
-                        Sil
-                      </Button>
-
-                      {/* Title */}
-                      <FormField>
-                        <Field name={`projects.${index}.title`} placeholder="Proje Başlığı" as={Input} />
-                      </FormField>
-
-                      {/* Summary */}
-                      <FormField>
-                        <Field name={`projects.${index}.summary`} placeholder="Proje Özeti" as={TextArea} />
-                      </FormField>
-
-                      {/* Description */}
-                      <FormField>
-                        <Field name={`projects.${index}.description`} placeholder="Proje Açıklaması" as={TextArea} rows={3} />
-                      </FormField>
-
-                      {/* Features */}
-                      <FieldArray name={`projects.${index}.features`}>
-                        {({ push: pushFeature, remove: removeFeature }) => (
-                          <div>
-                            <label>Özellikler</label>
-                            {project.features.map((feat, fIndex) => (
-                              <FormField key={fIndex}>
-                                <Input
-                                  placeholder="Özellik"
-                                  name={`projects.${index}.features.${fIndex}`}
-                                  value={feat}
-                                  onChange={handleChange}
-                                  action={{ icon: "trash", color: "red", onClick: () => removeFeature(fIndex) }}
-                                />
-                              </FormField>
-                            ))}
-                            <Button type="button" size="tiny" onClick={() => pushFeature("")}>Yeni Özellik</Button>
-                          </div>
-                        )}
-                      </FieldArray>
-
-                      {/* Tech Stack */}
-                      <FieldArray name={`projects.${index}.techStack`}>
-                        {({ push: pushTech, remove: removeTech }) => (
-                          <div>
-                            <label>Tech Stack</label>
-                            {project.techStack.map((tech, tIndex) => (
-                              <FormField key={tIndex}>
-                                <Input
-                                  placeholder="Teknoloji"
-                                  name={`projects.${index}.techStack.${tIndex}`}
-                                  value={tech}
-                                  onChange={handleChange}
-                                  action={{ icon: "trash", color: "red", onClick: () => removeTech(tIndex) }}
-                                />
-                              </FormField>
-                            ))}
-                            <Button type="button" size="tiny" onClick={() => pushTech("")}>Yeni Teknoloji</Button>
-                          </div>
-                        )}
-                      </FieldArray>
-
-                      {/* Diğer Alanlar */}
-                      <FormField>
-                        <Field name={`projects.${index}.projectDate`} type="date" as={Input} />
-                      </FormField>
-                      <FormField>
-                        <Field name={`projects.${index}.liveDemoUrl`} placeholder="Canlı Demo URL" as={Input} />
-                      </FormField>
-                      <FormField>
-                        <Field name={`projects.${index}.sourceCodeUrl`} placeholder="Kaynak Kod URL" as={Input} />
-                      </FormField>
-                      <FormField>
-                        <Field name={`projects.${index}.coverImage`} placeholder="Kapak Görseli URL" as={Input} />
-                      </FormField>
-
-                    </div>
-                  ))}
-
-                  <Button type="button" color="blue" onClick={() => push(initialValues.projects[0])}>
-                    Yeni Proje Ekle
-                  </Button>
-                </div>
-              )}
-            </FieldArray>
-
-            <Button type="submit" color="green" style={{ marginTop: "1rem" }}>
-              Kaydet
-            </Button>
-          </Form>
-        )}
-      </Formik>
+        <TableBody>
+          {projects.map((e, index) => (
+            <TableRow>
+              <TableCell>{e.title}</TableCell>
+              <TableCell>{e.summary}</TableCell>
+              <TableCell>{e.description.substring(0, 30)}...</TableCell>
+              <TableCell>
+                <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
+                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     </div>
   );
 }
