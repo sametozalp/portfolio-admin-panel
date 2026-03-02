@@ -1,0 +1,52 @@
+import { NavLink } from "react-router-dom";
+import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+
+export default function ExperiencePage() {
+
+    const experiences = [
+        {
+            id: 1,
+            positionName: "Software Engineer",
+            company: "Tech Company",
+            description: "Worked on developing web applications.",
+            startDate: "2020-01-01",
+            endDate: "2021-12-31"
+        }
+    ];
+
+    return (
+        <div>
+            <p className="page-title">Deneyimleri Yönet</p>
+            <Button content="Yeni Deneyim Ekle" icon="add" labelPosition="" style={{ float: "right", marginBottom: "1.5rem" }} as={NavLink} to="add" />
+
+            <Table singleLine>
+                <TableHeader>
+                    <TableRow>
+                        <TableHeaderCell>Position Name</TableHeaderCell>
+                        <TableHeaderCell>Company</TableHeaderCell>
+                        <TableHeaderCell>Description</TableHeaderCell>
+                        <TableHeaderCell>Start Date</TableHeaderCell>
+                        <TableHeaderCell>End Date</TableHeaderCell>
+                        <TableHeaderCell>Actions</TableHeaderCell>
+                    </TableRow>
+                </TableHeader>
+
+                <TableBody>
+                    {experiences.map((e, index) => (
+                        <TableRow>
+                            <TableCell>{e.positionName}</TableCell>
+                            <TableCell>{e.company}</TableCell>
+                            <TableCell>{e.description.substring(0, 30)}...</TableCell>
+                            <TableCell>{e.startDate}</TableCell>
+                            <TableCell>{e.endDate}</TableCell>
+                            <TableCell>
+                                <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
+                                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" />
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </div>
+    );
+}
