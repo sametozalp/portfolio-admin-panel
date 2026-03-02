@@ -1,4 +1,5 @@
 import { Grid } from 'semantic-ui-react'
+import AdminRouter from '../router/adminRouter'
 import AdminMenu from './AdminMenu'
 
 export default function AdminDashboard() {
@@ -10,8 +11,9 @@ export default function AdminDashboard() {
                     <AdminMenu />
                 </Grid.Column>
                 <Grid.Column width={11}>
-                    <p>Welcome to the admin dashboard! Here you can manage your portfolio, view analytics, and customize your settings.</p>
+                    <AdminRouter />
                 </Grid.Column>
             </Grid.Row>
-        </Grid>)
+        </Grid>
+    )
 }
