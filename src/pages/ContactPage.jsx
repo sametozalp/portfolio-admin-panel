@@ -5,6 +5,8 @@ import ContactService from "../service/contactService";
 
 export default function ContactPage() {
 
+  const [isUpdate, setIsUpdate] = useState(true);
+
   const [contact, setContact] = useState({
     title: '',
     description: '',
@@ -15,6 +17,11 @@ export default function ContactPage() {
     const service = new ContactService();
     service.getContact().then(r => {
       setContact(r);
+
+      if (r.id == null)
+        setIsUpdate(false)
+      else
+        setIsUpdate(true)
     });
   }, []);
 
@@ -38,8 +45,10 @@ export default function ContactPage() {
             <ErrorMessage name="myEmail" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          <Button color="green" type="submit">Ekle</Button>
-          <Button color="gray" type="submit">Güncelle</Button>
+          {isUpdate
+            ? <Button color="blue" type="submit">Güncelle</Button>
+            : <Button color="green" type="submit">Ekle</Button>
+          }
         </Form>
       </Formik>
     </div>

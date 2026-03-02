@@ -5,6 +5,8 @@ import AboutService from "../service/aboutService";
 
 export default function AboutPage() {
 
+  const [isUpdate, setIsUpdate] = useState(true);
+
   const [about, setAbout] = useState({
     title: '',
     description: '',
@@ -15,6 +17,11 @@ export default function AboutPage() {
     const service = new AboutService();
     service.getAbout().then(r => {
       setAbout(r);
+      
+      if (r.id == null)
+        setIsUpdate(false)
+      else
+        setIsUpdate(true)
     });
   }, []);
 
@@ -43,8 +50,10 @@ export default function AboutPage() {
             <ErrorMessage name="skills" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          <Button color="green" type="submit">Ekle</Button>
-          <Button color="gray" type="submit">Güncelle</Button>
+          {isUpdate
+            ? <Button color="blue" type="submit">Güncelle</Button>
+            : <Button color="green" type="submit">Ekle</Button>
+          }
         </Form>
       </Formik>
     </div>

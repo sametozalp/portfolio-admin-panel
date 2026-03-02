@@ -5,6 +5,8 @@ import EntranceService from "../service/entranceService";
 
 export default function EntrancePage() {
 
+  const [isUpdate, setIsUpdate] = useState(true);
+
   const [about, setAbout] = useState({
     title: '',
     description: '',
@@ -15,7 +17,11 @@ export default function EntrancePage() {
     const service = new EntranceService();
     service.getEntrance().then(r => {
       setAbout(r);
-      console.log(r)
+      
+      if (r.id == null)
+        setIsUpdate(false)
+      else
+        setIsUpdate(true)
     });
   }, []);
 
@@ -39,8 +45,10 @@ export default function EntrancePage() {
             <ErrorMessage name="fullName" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          <Button color="green" type="submit">Ekle</Button>
-          <Button color="gray" type="submit">Güncelle</Button>
+          {isUpdate
+            ? <Button color="blue" type="submit">Güncelle</Button>
+            : <Button color="green" type="submit">Ekle</Button>
+          }
         </Form>
       </Formik>
     </div>

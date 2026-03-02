@@ -4,6 +4,9 @@ import { Button, FormField, Label } from "semantic-ui-react";
 import CopyrightService from "../service/copyrightService";
 
 export default function CopyrightPage() {
+
+    const [isUpdate, setIsUpdate] = useState(true);
+
     const [copyright, setCopyright] = useState({
         description: ''
     })
@@ -12,6 +15,11 @@ export default function CopyrightPage() {
         const service = new CopyrightService();
         service.getCopyright().then(r => {
             setCopyright(r);
+
+            if (r.id == null)
+                setIsUpdate(false)
+            else
+                setIsUpdate(true)
         });
     }, []);
 
@@ -26,8 +34,10 @@ export default function CopyrightPage() {
                         <ErrorMessage name="description" render={error => <Label pointing basic color="red" content={error} />} />
                     </FormField>
 
-                    <Button color="green" type="submit">Ekle</Button>
-                    <Button color="gray" type="submit">Güncelle</Button>
+                    {isUpdate
+                        ? <Button color="blue" type="submit">Güncelle</Button>
+                        : <Button color="green" type="submit">Ekle</Button>
+                    }
                 </Form>
             </Formik>
         </div>
