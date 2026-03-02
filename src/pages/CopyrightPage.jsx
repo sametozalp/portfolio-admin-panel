@@ -13,7 +13,7 @@ export default function CopyrightPage() {
         service.getCopyright().then(r => {
             setCopyright(r);
         });
-    });
+    }, []);
 
     return (
         <div>

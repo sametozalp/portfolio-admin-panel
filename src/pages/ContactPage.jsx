@@ -16,7 +16,7 @@ export default function ContactPage() {
     service.getContact().then(r => {
       setContact(r);
     });
-  });
+  }, []);
 
   return (
     <div>

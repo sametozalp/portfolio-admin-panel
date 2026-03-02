@@ -1,25 +1,38 @@
 import { ErrorMessage, Field, Formik } from "formik";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Button, Form, FormField, Label } from "semantic-ui-react";
+import ProjectService from "../../service/projectService";
 
 export default function ProjectUpdate() {
-  let initialValue = {
-    "id": 1,
-    "title": "",
-    "summary": "",
-    "description": "",
-    "features": "",
-    "projectDate": "",
-    "techStack": "",
-    "liveDemoUrl": "",
-    "sourceCodeUrl": "",
-    "coverImage": ""
-  }
+
+  const {id} = useParams()
+  const [project, setProject] = useState({
+    showable: "",
+    title: "",
+    summary: "",
+    description: "",
+    features: "",
+    coverImage: "",
+    images: "",
+    projectDate: "",
+    techStack: "",
+    liveDemoUrl: "",
+    sourceCodeUrl: ""
+  });
+
+  useEffect(() => {
+    const service = new ProjectService()
+    service.getById(id).then(r => {
+      setProject(r);
+    });
+  }, []);
 
   return (
     <div>
-      <p className="page-title">Proje Ekle</p>
+      <p className="page-title">Proje Güncelle</p>
 
-      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { }}>
+      <Formik initialValues={project} onSubmit={(values, { resetForm }) => { }} enableReinitialize>
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Proje başlığı"></Field>

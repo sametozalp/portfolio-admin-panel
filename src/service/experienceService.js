@@ -6,4 +6,9 @@ export default class ExperienceService {
         const res = await api.get("/experience");
         return res.data;
     }
+
+    async getById(id) {
+        const res = await api.get("/experience/" + id);
+        return res.data;
+    }
 }

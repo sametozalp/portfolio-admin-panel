@@ -12,7 +12,7 @@ export default function ExperiencePage() {
         service.getExperiences().then(r => {
             setExperiences(r);
         });
-    });
+    }, []);
 
     return (
         <div>

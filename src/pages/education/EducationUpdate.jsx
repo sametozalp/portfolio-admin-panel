@@ -1,20 +1,32 @@
 import { ErrorMessage, Field, Formik } from "formik";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Button, Form, FormField, Label } from "semantic-ui-react";
+import EducationService from "../../service/educationService";
 
 export default function EducationUpdate() {
-  let initialValue = {
+
+  const { id } = useParams()
+  const [education, setEducation] = useState({
     major: "",
     school: "",
     description: "",
     startDate: "",
     endDate: ""
-  }
+  });
+
+  useEffect(() => {
+    const service = new EducationService()
+    service.getById(id).then(r => {
+      setEducation(r);
+    });
+  }, []);
 
   return (
     <div>
-      <p className="page-title">Proje Ekle</p>
+      <p className="page-title">Proje Güncelle</p>
 
-      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { }}>
+      <Formik initialValues={education} onSubmit={(values, { resetForm }) => { }} enableReinitialize>
         <Form className="ui form">
           <FormField>
             <Field name="major" placeholder="Bölüm adı"></Field>
