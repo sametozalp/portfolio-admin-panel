@@ -6,4 +6,14 @@ export default class AboutService {
     const response = await api.get("/about");
     return response.data;
   }
+
+  async add(value) {
+    const response = await api.post("/about", value);
+    return response.data;
+  }
+
+  async put(id, value) {
+    const response = await api.put("/about/" + id, value);
+    return response.data;
+  }
 }

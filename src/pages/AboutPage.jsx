@@ -10,14 +10,15 @@ export default function AboutPage() {
   const [about, setAbout] = useState({
     title: '',
     description: '',
-    fullName: ''
+    profileImageUrl: '',
+    skills: []
   })
 
   useEffect(() => {
     const service = new AboutService();
     service.getAbout().then(r => {
       setAbout(r);
-      
+
       if (r.id == null)
         setIsUpdate(false)
       else
@@ -25,10 +26,21 @@ export default function AboutPage() {
     });
   }, []);
 
+  function submit(values) {
+    const service = new AboutService();
+    if (isUpdate) {
+      service.update(about.id, values);
+    } else {
+      service.add(values);
+    }
+  }
+
   return (
     <div>
       <p className="page-title">Hakkımda Düzenle</p>
-      <Formik initialValues={about} onSubmit={(values, { resetForm }) => { }} enableReinitialize >
+      <Formik initialValues={about} onSubmit={(values, { resetForm }) => {
+        submit(values);
+      }} enableReinitialize >
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Başlık"></Field>
