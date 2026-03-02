@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom'
 import { Menu, MenuItem } from 'semantic-ui-react'
 
 export default function AdminMenu() {
@@ -6,18 +7,23 @@ export default function AdminMenu() {
         <Menu pointing vertical>
             <MenuItem
                 name='Giriş'
+                as={NavLink} to="/admin/entrance"
             />
             <MenuItem
                 name='Hakkımda'
+                as={NavLink} to="/admin/about"
             />
             <MenuItem
                 name='Özgeçmiş'
+                as={NavLink} to="/admin/resume"
             />
-             <MenuItem
+            <MenuItem
                 name='Projeler'
+                as={NavLink} to="/admin/projects"
             />
-             <MenuItem
+            <MenuItem
                 name='İletişim'
+                as={NavLink} to="/admin/contact"
             />
         </Menu>
     )

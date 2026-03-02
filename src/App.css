@@ -56,3 +56,23 @@
   padding: 12px !important;
   font-size: 16px;
 }
+
+
+/* Sol menü */
+.admin-dashboard .column:first-child {
+    padding: 2rem 1rem;
+}
+
+/* Menü başlığı */
+.admin-dashboard .column:first-child p {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #222;
+}
+
+/* Sağ içerik alanı */
+.admin-dashboard .column:last-child {
+    padding: 2rem;
+}
