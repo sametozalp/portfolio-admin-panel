@@ -10,7 +10,7 @@ export default function ContactPage() {
 
   return (
     <div>
-      <p>İletişimi Düzenle</p>
+      <p className="page-title">İletişimi Düzenle</p>
       <Formik initialValues={initialValues} onSubmit={(values, { resetForm }) => { }} >
         <Form className="ui form">
           <FormField>

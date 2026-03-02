@@ -11,7 +11,7 @@ export default function AboutPage() {
 
   return (
     <div>
-      <p>Hakkımda Düzenle</p>
+      <p className="page-title">Hakkımda Düzenle</p>
       <Formik initialValues={initialValues} onSubmit={(values, { resetForm }) => { }} >
         <Form className="ui form">
           <FormField>

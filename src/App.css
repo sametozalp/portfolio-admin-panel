@@ -81,3 +81,27 @@
     padding: 40px 50px;
     border-radius: 8px;
 }
+
+/* page-title.css */
+
+.page-title {
+    font-size: 2rem;              /* Büyük ve okunabilir */
+    font-weight: 600;             /* Hafif kalın */
+    color: #2185d0;               /* Semantic UI primary renk tonu mavi */
+    margin-bottom: 1.5rem;        /* Alt boşluk */
+    text-align: center;           /* Ortala */
+    letter-spacing: 0.5px;        /* Harfler arası hafif boşluk */
+    text-transform: capitalize;   /* Baş harfleri büyük yap */
+    position: relative;           
+}
+
+/* Alt çizgi efekti */
+.page-title::after {
+    content: '';
+    display: block;
+    width: 60px;                   /* Alt çizgi uzunluğu */
+    height: 3px;                   /* Alt çizgi kalınlığı */
+    background-color: #2185d0;     /* Alt çizgi rengi */
+    margin: 0.5rem auto 0 auto;    /* Ortala */
+    border-radius: 2px;            /* Hafif yuvarlak köşe */
+}

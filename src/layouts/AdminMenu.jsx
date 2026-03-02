@@ -14,10 +14,6 @@ export default function AdminMenu() {
                 as={NavLink} to="/admin/about"
             />
             <MenuItem
-                name='Özgeçmiş'
-                as={NavLink} to="/admin/resume"
-            />
-            <MenuItem
                 name='Projeler'
                 as={NavLink} to="/admin/projects"
             />

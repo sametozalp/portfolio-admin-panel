@@ -11,7 +11,7 @@ export default function EntrancePage() {
 
   return (
     <div>
-      <p>Girişi Düzenle</p>
+      <p className="page-title">Girişi Düzenle</p>
       <Formik initialValues={initialValues} onSubmit={(values, { resetForm }) => { }} >
         <Form className="ui form">
           <FormField>
