@@ -12,7 +12,7 @@ export default class AboutService {
     return response.data;
   }
 
-  async put(id, value) {
+  async update(id, value) {
     const response = await api.put("/about/" + id, value);
     return response.data;
   }

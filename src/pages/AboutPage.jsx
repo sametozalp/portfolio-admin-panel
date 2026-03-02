@@ -1,88 +1,76 @@
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Formik, Form as FormikForm } from "formik";
 import { useEffect, useState } from "react";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
-import * as Yup from "yup";
+import { Button, FormField, Label } from "semantic-ui-react";
 import AboutService from "../service/aboutService";
 
 export default function AboutPage() {
-
-  const [isUpdate, setIsUpdate] = useState(true);
-
-  const [about, setAbout] = useState({
+  const initialData = {
     title: '',
     description: '',
     profileImageUrl: '',
-    skills: ''
-  })
+    skills: '' // Array yerine string tutmak input için daha sağlıklı
+  };
 
-  const schema = Yup.object({
-    title: Yup.string().required('Başlık gereklidir'),
-    description: Yup.string().required('Açıklama gereklidir'),
-    profileImageUrl: Yup.string().url('Geçerli bir URL girin'),
-    skills: Yup.string().transform(value => {
-      return value ? value.split(',').map(skill => skill.trim()).filter(skill => skill) : [];
-    })
-  });
+  const [about, setAbout] = useState(initialData);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   useEffect(() => {
     const service = new AboutService();
     service.getAbout().then(r => {
-      setAbout(r);
-
-      if (r.id == null)
-        setIsUpdate(false)
-      else
-        setIsUpdate(true)
+      // GELEN VERİ KONTROLÜ: Eğer r boşsa veya string ise state'i bozma
+      if (r && typeof r === 'object' && r.id) {
+        setAbout(r);
+        setIsUpdate(true);
+      }
     });
   }, []);
 
   function submit(values) {
     const service = new AboutService();
+    // skills eğer array bekleniyorsa burada split edebilirsin
+    const payload = { ...values, skills: typeof values.skills === 'string' ? values.skills.split(',') : values.skills };
+    
     if (isUpdate) {
-      service.update(about.id, values);
+      service.update(about.id, values)
     } else {
-      service.add(values);
+      service.add(payload);
     }
   }
 
   return (
     <div>
       <p className="page-title">Hakkımda Düzenle</p>
-      <Formik
-        initialValues={{about}}
-        validationSchema={schema}
-        onSubmit={(values, { resetForm }) => {
-          submit(values);
-        }}
-        enableReinitialize
+      <Formik 
+        initialValues={about} 
+        enableReinitialize 
+        onSubmit={(values) => submit(values)}
       >
-        <Form className="ui form">
+        <FormikForm className="ui form"> {/* Semantic UI'ın CSS class'ını Formik Form'a verdik */}
           <FormField>
-            <Field name="title" placeholder="Başlık"></Field>
+            <Field name="title" placeholder="Başlık" />
             <ErrorMessage name="title" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
           <FormField>
-            <Field name="description" placeholder="Açıklama"></Field>
+            <Field name="description" placeholder="Açıklama" />
             <ErrorMessage name="description" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
           <FormField>
-            <Field name="profileImageUrl" placeholder="Profil Resmi URL"></Field>
+            <Field name="profileImageUrl" placeholder="Profil Resmi URL" />
             <ErrorMessage name="profileImageUrl" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
           <FormField>
-            <Field name="skills" placeholder="Yetenekler"></Field>
+            <Field name="skills" placeholder="Yetenekler (Virgülle ayırın)" />
             <ErrorMessage name="skills" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          {isUpdate
-            ? <Button color="blue" type="submit">Güncelle</Button>
-            : <Button color="green" type="submit">Ekle</Button>
-          }
-        </Form>
+          <Button color={isUpdate ? "blue" : "green"} type="submit">
+            {isUpdate ? "Güncelle" : "Ekle"}
+          </Button>
+        </FormikForm>
       </Formik>
     </div>
-  )
+  );
 }
