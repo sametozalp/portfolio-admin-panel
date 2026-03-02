@@ -29,6 +29,10 @@ export default function AdminMenu() {
                 name='İletişim'
                 as={NavLink} to="/admin/contact"
             />
+            <MenuItem
+                name='Copyright'
+                as={NavLink} to="/admin/copyright"
+            />
         </Menu>
     )
 }

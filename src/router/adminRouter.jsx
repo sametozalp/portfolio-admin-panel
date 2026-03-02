@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import AboutPage from "../pages/AboutPage";
 import ContactPage from "../pages/ContactPage";
+import CopyrightPage from "../pages/CopyrightPage";
 import EducationAdd from "../pages/education/EducationAdd";
 import EducationPage from "../pages/education/EducationPage";
 import EducationUpdate from "../pages/education/EducationUpdate";
@@ -32,6 +33,7 @@ export default function AdminRouter() {
         <Route path="/education/update/:id" element={<EducationUpdate />} />
         
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/copyright" element={<CopyrightPage />} />
     </Routes>
   )
 }
