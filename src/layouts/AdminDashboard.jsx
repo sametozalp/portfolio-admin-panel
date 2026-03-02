@@ -11,7 +11,9 @@ export default function AdminDashboard() {
                     <AdminMenu />
                 </Grid.Column>
                 <Grid.Column width={12}>
-                    <AdminRouter />
+                    <div className='admin-content'>
+                        <AdminRouter />
+                    </div>
                 </Grid.Column>
             </Grid.Row>
         </Grid>

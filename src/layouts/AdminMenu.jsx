@@ -22,6 +22,14 @@ export default function AdminMenu() {
                 as={NavLink} to="/admin/projects"
             />
             <MenuItem
+                name='Deneyim'
+                as={NavLink} to="/admin/experience"
+            />
+            <MenuItem
+                name='Eğitim'
+                as={NavLink} to="/admin/education"
+            />
+            <MenuItem
                 name='İletişim'
                 as={NavLink} to="/admin/contact"
             />

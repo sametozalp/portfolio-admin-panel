@@ -76,3 +76,8 @@
 .admin-dashboard .column:last-child {
     padding: 2rem;
 }
+
+.admin-content {
+    padding: 40px 50px;
+    border-radius: 8px;
+}
