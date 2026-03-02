@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { Button, Form, FormField, Label } from "semantic-ui-react";
+import * as Yup from "yup";
 import AboutService from "../service/aboutService";
 
 export default function AboutPage() {
@@ -11,8 +12,17 @@ export default function AboutPage() {
     title: '',
     description: '',
     profileImageUrl: '',
-    skills: []
+    skills: ''
   })
+
+  const schema = Yup.object({
+    title: Yup.string().required('Başlık gereklidir'),
+    description: Yup.string().required('Açıklama gereklidir'),
+    profileImageUrl: Yup.string().url('Geçerli bir URL girin'),
+    skills: Yup.string().transform(value => {
+      return value ? value.split(',').map(skill => skill.trim()).filter(skill => skill) : [];
+    })
+  });
 
   useEffect(() => {
     const service = new AboutService();
@@ -38,9 +48,14 @@ export default function AboutPage() {
   return (
     <div>
       <p className="page-title">Hakkımda Düzenle</p>
-      <Formik initialValues={about} onSubmit={(values, { resetForm }) => {
-        submit(values);
-      }} enableReinitialize >
+      <Formik
+        initialValues={{about}}
+        validationSchema={schema}
+        onSubmit={(values, { resetForm }) => {
+          submit(values);
+        }}
+        enableReinitialize
+      >
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Başlık"></Field>
