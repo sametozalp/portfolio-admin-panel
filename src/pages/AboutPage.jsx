@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Formik, Form as FormikForm } from "formik";
 import { useEffect, useState } from "react";
-import { Button, FormField, Label } from "semantic-ui-react";
+import { Button, FormField, Image, Label } from "semantic-ui-react";
 import AboutService from "../service/aboutService";
 
 export default function AboutPage() {
@@ -61,7 +61,9 @@ export default function AboutPage() {
             <ErrorMessage name="skills" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          <Button color={isUpdate ? "blue" : "green"} type="submit">
+          <Image src={about.profileImageUrl == null ? '/images/image.png': about.profileImageUrl} size='medium' style={{ margin: 'auto' }} />
+
+          <Button color={isUpdate ? "blue" : "green"} type="submit" style={{ marginTop: "20px" }}>
             {isUpdate ? "Güncelle" : "Ekle"}
           </Button>
         </FormikForm>
