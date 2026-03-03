@@ -1,34 +1,40 @@
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { Button, FormField, Label } from "semantic-ui-react";
 import ContactService from "../service/contactService";
 
 export default function ContactPage() {
 
-  const [isUpdate, setIsUpdate] = useState(true);
+  const [isUpdate, setIsUpdate] = useState(false);
 
   const [contact, setContact] = useState({
     title: '',
     description: '',
     myEmail: ''
   })
+  const service = new ContactService();
 
   useEffect(() => {
-    const service = new ContactService();
     service.getContact().then(r => {
-      setContact(r);
-
-      if (r.id == null)
-        setIsUpdate(false)
-      else
-        setIsUpdate(true)
+      if (r != null && r.id != null) {
+        setContact(r);
+        setIsUpdate(true);
+      }
     });
   }, []);
+
+  function submit(values) {
+    if (isUpdate) {
+      service.update(contact.id, values)
+    } else {
+      service.add(values);
+    }
+  }
 
   return (
     <div>
       <p className="page-title">İletişimi Düzenle</p>
-      <Formik initialValues={contact} onSubmit={(values, { resetForm }) => { }} enableReinitialize >
+      <Formik initialValues={contact} onSubmit={(values, { resetForm }) => { submit(values) }} enableReinitialize >
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Başlık"></Field>

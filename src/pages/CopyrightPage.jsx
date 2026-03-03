@@ -5,28 +5,35 @@ import CopyrightService from "../service/copyrightService";
 
 export default function CopyrightPage() {
 
-    const [isUpdate, setIsUpdate] = useState(true);
+    const [isUpdate, setIsUpdate] = useState(false);
 
     const [copyright, setCopyright] = useState({
         description: ''
     })
 
-    useEffect(() => {
-        const service = new CopyrightService();
-        service.getCopyright().then(r => {
-            setCopyright(r);
+    const service = new CopyrightService();
 
-            if (r.id == null)
-                setIsUpdate(false)
-            else
-                setIsUpdate(true)
+    useEffect(() => {
+        service.getCopyright().then(r => {
+            if (r != null && r.id != null) {
+                setCopyright(r);
+                setIsUpdate(true);
+            }
         });
     }, []);
+
+    function submit(values) {
+        if (isUpdate) {
+            service.update(copyright.id, values)
+        } else {
+            service.add(values);
+        }
+    }
 
     return (
         <div>
             <p className="page-title">Copyright Düzenle</p>
-            <Formik initialValues={copyright} onSubmit={(values, { resetForm }) => { }} enableReinitialize >
+            <Formik initialValues={copyright} onSubmit={(values, { resetForm }) => { submit(values) }} enableReinitialize >
                 <Form className="ui form">
 
                     <FormField>

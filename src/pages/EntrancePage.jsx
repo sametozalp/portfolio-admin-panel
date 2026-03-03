@@ -1,34 +1,44 @@
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { Button, FormField, Label } from "semantic-ui-react";
 import EntranceService from "../service/entranceService";
 
 export default function EntrancePage() {
 
-  const [isUpdate, setIsUpdate] = useState(true);
+  const [isUpdate, setIsUpdate] = useState(false);
 
-  const [about, setAbout] = useState({
+  const [entrance, setEntrance] = useState({
     title: '',
     description: '',
     fullName: ''
   });
 
+  const service = new EntranceService();
+
   useEffect(() => {
-    const service = new EntranceService();
     service.getEntrance().then(r => {
-      setAbout(r);
-      
-      if (r.id == null)
-        setIsUpdate(false)
-      else
-        setIsUpdate(true)
+      if (r != null && r.id != null) {
+        setEntrance(r);
+        setIsUpdate(true);
+      }
     });
   }, []);
+
+  function submit(values) {
+    if (isUpdate) {
+      service.update(entrance.id, values)
+    } else {
+      service.add(values);
+    }
+  }
 
   return (
     <div>
       <p className="page-title">Girişi Düzenle</p>
-      <Formik initialValues={about} onSubmit={(values, { resetForm }) => { }} enableReinitialize >
+      <Formik
+        initialValues={entrance}
+        onSubmit={(values) => { submit(values) }}
+        enableReinitialize >
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Başlık"></Field>
