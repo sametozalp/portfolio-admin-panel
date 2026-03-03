@@ -12,7 +12,7 @@ export default function CopyrightPage() {
     })
 
     const service = new CopyrightService();
-
+    
     useEffect(() => {
         service.getCopyright().then(r => {
             if (r != null && r.id != null) {

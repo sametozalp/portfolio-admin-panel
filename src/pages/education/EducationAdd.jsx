@@ -1,5 +1,6 @@
-import { ErrorMessage, Field, Formik } from "formik";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Button, FormField, Label } from "semantic-ui-react";
+import EducationService from "../../service/educationService";
 
 export default function EducationAdd() {
   let initialValue = {
@@ -10,11 +11,16 @@ export default function EducationAdd() {
     endDate: ""
   }
 
+  function submit(values) {
+    const service = new EducationService()
+    service.add(values)
+  }
+
   return (
     <div>
-      <p className="page-title">Proje Ekle</p>
+      <p className="page-title">Eğitim Ekle</p>
 
-      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { }}>
+      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { submit(values)}}>
         <Form className="ui form">
           <FormField>
             <Field name="major" placeholder="Bölüm adı"></Field>

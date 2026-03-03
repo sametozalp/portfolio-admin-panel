@@ -4,7 +4,7 @@ import AdminMenu from './AdminMenu'
 
 export default function AdminDashboard() {
     return (
-        <Grid columns={2} divided className='admin-dashboard'>
+        <Grid columns={2} divided className='admin-dashboard' stackable>
             <Grid.Row>
                 <Grid.Column width={4}>
                     <p>Admin Panel</p>

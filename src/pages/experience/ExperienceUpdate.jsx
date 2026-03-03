@@ -1,7 +1,7 @@
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { Button, FormField, Label } from "semantic-ui-react";
 import ExperienceService from "../../service/experienceService";
 
 export default function ExperienceUpdate() {
@@ -14,19 +14,23 @@ export default function ExperienceUpdate() {
     startDate: "",
     endDate: ""
   });
+  const service = new ExperienceService()
 
   useEffect(() => {
-    const service = new ExperienceService()
     service.getById(id).then(r => {
       setExperience(r);
     });
   }, []);
 
+  function submit(values) {
+    service.update(experience.id, values)
+  }
+
   return (
     <div>
-      <p className="page-title">Proje Güncelle</p>
+      <p className="page-title">Deneyimi Güncelle</p>
 
-      <Formik initialValues={experience} onSubmit={(values, { resetForm }) => { }} enableReinitialize>
+      <Formik initialValues={experience} onSubmit={(values) => { submit(values) }} enableReinitialize>
         <Form className="ui form">
           <FormField>
             <Field name="positionName" placeholder="Pozisyon adı"></Field>
@@ -63,7 +67,7 @@ export default function ExperienceUpdate() {
             }></ErrorMessage>
           </FormField>
 
-          <Button color="green" type="submit">Ekle</Button>
+          <Button color="green" type="submit">Güncelle</Button>
         </Form>
       </Formik>
     </div>

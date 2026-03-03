@@ -1,12 +1,12 @@
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { Button, FormField, Label } from "semantic-ui-react";
 import ProjectService from "../../service/projectService";
 
 export default function ProjectUpdate() {
 
-  const {id} = useParams()
+  const { id } = useParams()
   const [project, setProject] = useState({
     showable: "",
     title: "",
@@ -20,19 +20,23 @@ export default function ProjectUpdate() {
     liveDemoUrl: "",
     sourceCodeUrl: ""
   });
+  const service = new ProjectService()
 
   useEffect(() => {
-    const service = new ProjectService()
     service.getById(id).then(r => {
       setProject(r);
     });
   }, []);
 
+  function submit(values) {
+    service.update(project.id, values)
+  }
+
   return (
     <div>
-      <p className="page-title">Proje Güncelle</p>
+      <p className="page-title">Projeyi Güncelle</p>
 
-      <Formik initialValues={project} onSubmit={(values, { resetForm }) => { }} enableReinitialize>
+      <Formik initialValues={project} onSubmit={(values) => { submit(values) }} enableReinitialize>
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Proje başlığı"></Field>
@@ -97,7 +101,7 @@ export default function ProjectUpdate() {
             }></ErrorMessage>
           </FormField>
 
-          <Button color="green" type="submit">Ekle</Button>
+          <Button color="green" type="submit">Güncelle</Button>
         </Form>
       </Formik>
     </div>

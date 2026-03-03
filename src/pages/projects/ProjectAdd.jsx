@@ -1,5 +1,6 @@
-import { ErrorMessage, Field, Formik } from "formik";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Button, FormField, Label } from "semantic-ui-react";
+import ProjectService from "../../service/projectService";
 
 export default function ProjectAdd() {
 
@@ -15,11 +16,16 @@ export default function ProjectAdd() {
     "coverImage": ""
   }
 
+  function submit(values) {
+    const service = new ProjectService()
+    service.add(values)
+  }
+
   return (
     <div>
       <p className="page-title">Proje Ekle</p>
 
-      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { }}>
+      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { submit(values) }}>
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Proje başlığı"></Field>

@@ -1,5 +1,6 @@
-import { ErrorMessage, Field, Formik } from "formik";
-import { Button, Form, FormField, Label } from "semantic-ui-react";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import { Button, FormField, Label } from "semantic-ui-react";
+import ExperienceService from "../../service/experienceService";
 
 export default function ExperienceAdd() {
   let initialValue = {
@@ -10,11 +11,16 @@ export default function ExperienceAdd() {
     endDate: ""
   }
 
+  function submit(values) {
+    const service = new ExperienceService()
+    service.add(values)
+  }
+
   return (
     <div>
-      <p className="page-title">Proje Ekle</p>
+      <p className="page-title">Deneyim Ekle</p>
 
-      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { }}>
+      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { submit(values) }}>
         <Form className="ui form">
           <FormField>
             <Field name="positionName" placeholder="Pozisyon adı"></Field>
