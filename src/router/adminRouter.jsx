@@ -9,6 +9,7 @@ import EntrancePage from "../pages/EntrancePage";
 import ExperienceAdd from "../pages/experience/ExperienceAdd";
 import ExperiencePage from "../pages/experience/ExperiencePage";
 import ExperienceUpdate from "../pages/experience/ExperienceUpdate";
+import ProfileImagePage from "../pages/ProfileImagePage";
 import ProjectsAdd from "../pages/projects/ProjectAdd";
 import ProjectsPage from "../pages/projects/ProjectsPage";
 import ProjectsUpdate from "../pages/projects/ProjectUpdate";
@@ -34,6 +35,7 @@ export default function AdminRouter() {
         
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/copyright" element={<CopyrightPage />} />
+        <Route path="/profileImage" element={<ProfileImagePage />} />
     </Routes>
   )
 }

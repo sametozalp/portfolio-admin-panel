@@ -13,6 +13,10 @@ export default function AdminMenu() {
                 name='Hakkımda'
                 as={NavLink} to="/admin/about"
             />
+             <MenuItem
+                name='Profil Resmi'
+                as={NavLink} to="/admin/profileImage"
+            />
             <MenuItem
                 name='Projeler'
                 as={NavLink} to="/admin/projects"

@@ -1,11 +1,10 @@
 import { ErrorMessage, Field, Formik, Form as FormikForm } from "formik";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, FormField, Image, Label } from "semantic-ui-react";
+import { useEffect, useMemo, useState } from "react";
+import { Button, FormField, Label } from "semantic-ui-react";
 import AboutService from "../service/aboutService";
 
 export default function AboutPage() {
 
-  const newPhoto = useRef(null);
   const service = useMemo(() => new AboutService(), [])
 
   const initialData = {
@@ -29,20 +28,10 @@ export default function AboutPage() {
 
   function submit(values) {
 
-    const formData = new FormData();
-    formData.append("request", {
-      title: about.title,
-      description: about.description,
-      skills: about.skills
-    });
-
-    if (newPhoto.current != null && newPhoto.current !== "")
-      formData.append("newProfilePhoto", newPhoto.current);
-
     if (isUpdate) {
-      service.update(about.id, formData)
+      service.update(about.id, values)
     } else {
-      service.add(formData);
+      service.add(values);
     }
   }
 
@@ -65,29 +54,10 @@ export default function AboutPage() {
             <ErrorMessage name="description" render={error => <Label pointing basic color="red" content={error} />} />
           </FormField>
 
-          {/* <FormField>
-            <Field name="profileImageUrl" placeholder="Profil Resmi URL" />
-            <ErrorMessage name="profileImageUrl" render={error => <Label pointing basic color="red" content={error} />} />
-          </FormField> */}
-
           <FormField>
             <Field name="skills" placeholder="Yetenekler (Virgülle ayırın)" />
             <ErrorMessage name="skills" render={error => <Label pointing basic color="red" content={error} />} />
-          </FormField>
-
-          <Image src={about.profileImageUrl == null ? '/images/image.png' : about.profileImageUrl} size='medium' style={{ margin: 'auto' }} />
-
-          <FormField style={{ marginTop: "20px" }}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                if (e.currentTarget.files && e.currentTarget.files[0]) {
-                  newPhoto.current = e.currentTarget.files[0];
-                }
-              }}
-            />
-          </FormField>
+          </FormField>        
 
           <Button color={isUpdate ? "blue" : "green"} type="submit" style={{ marginTop: "20px" }}>
             {isUpdate ? "Güncelle" : "Ekle"}
