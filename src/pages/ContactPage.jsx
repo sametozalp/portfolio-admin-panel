@@ -1,18 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, FormField, Label } from "semantic-ui-react";
 import ContactService from "../service/contactService";
 
 export default function ContactPage() {
 
   const [isUpdate, setIsUpdate] = useState(false);
+  const service = useMemo(()=> new ContactService(), [])
 
   const [contact, setContact] = useState({
     title: '',
     description: '',
     myEmail: ''
   })
-  const service = new ContactService();
 
   useEffect(() => {
     service.getContact().then(r => {

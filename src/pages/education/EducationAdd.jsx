@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useMemo } from "react";
 import { Button, FormField, Label } from "semantic-ui-react";
 import EducationService from "../../service/educationService";
 
@@ -11,8 +12,9 @@ export default function EducationAdd() {
     endDate: ""
   }
 
+  const service = useMemo(() => new EducationService(), [])
+
   function submit(values) {
-    const service = new EducationService()
     service.add(values)
   }
 
@@ -20,7 +22,7 @@ export default function EducationAdd() {
     <div>
       <p className="page-title">Eğitim Ekle</p>
 
-      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { submit(values)}}>
+      <Formik initialValues={initialValue} onSubmit={(values, { resetForm }) => { submit(values) }}>
         <Form className="ui form">
           <FormField>
             <Field name="major" placeholder="Bölüm adı"></Field>

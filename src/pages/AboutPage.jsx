@@ -1,11 +1,12 @@
 import { ErrorMessage, Field, Formik, Form as FormikForm } from "formik";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button, FormField, Image, Label } from "semantic-ui-react";
 import AboutService from "../service/aboutService";
 
 export default function AboutPage() {
 
   const newPhoto = useRef(null);
+  const service = useMemo(() => new AboutService(), [])
 
   const initialData = {
     title: '',
@@ -16,7 +17,6 @@ export default function AboutPage() {
 
   const [about, setAbout] = useState(initialData);
   const [isUpdate, setIsUpdate] = useState(false);
-  const service = new AboutService();
 
   useEffect(() => {
     service.getAbout().then(r => {

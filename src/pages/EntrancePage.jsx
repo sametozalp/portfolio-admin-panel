@@ -1,19 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, FormField, Label } from "semantic-ui-react";
 import EntranceService from "../service/entranceService";
 
 export default function EntrancePage() {
 
   const [isUpdate, setIsUpdate] = useState(false);
+  const service = useMemo(()=> new EntranceService(), [])
 
   const [entrance, setEntrance] = useState({
     title: '',
     description: '',
     fullName: ''
   });
-
-  const service = new EntranceService();
 
   useEffect(() => {
     service.getEntrance().then(r => {

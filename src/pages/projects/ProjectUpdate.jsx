@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, FormField, Label } from "semantic-ui-react";
 import ProjectService from "../../service/projectService";
@@ -20,7 +20,7 @@ export default function ProjectUpdate() {
     liveDemoUrl: "",
     sourceCodeUrl: ""
   });
-  const service = new ProjectService()
+  const service = useMemo(()=> new ProjectService(), [])
 
   useEffect(() => {
     service.getById(id).then(r => {

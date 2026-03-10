@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import ProjectService from "../../service/projectService";
@@ -6,9 +6,9 @@ import ProjectService from "../../service/projectService";
 export default function ProjectsPage() {
 
   const [projects, setProjects] = useState([]);
+  const service = useMemo(()=> new ProjectService(), [])
 
   useEffect(() => {
-    const service = new ProjectService()
     service.getProjects().then(r => {
       setProjects(r);
     });

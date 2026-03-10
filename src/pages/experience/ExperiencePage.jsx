@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import ExperienceService from "../../service/experienceService";
@@ -6,9 +6,9 @@ import ExperienceService from "../../service/experienceService";
 export default function ExperiencePage() {
 
     const [experiences, setExperiences] = useState([]);
+    const service = useMemo(() => new ExperienceService(), []);
 
     useEffect(() => {
-        const service = new ExperienceService()
         service.getExperiences().then(r => {
             setExperiences(r);
         });

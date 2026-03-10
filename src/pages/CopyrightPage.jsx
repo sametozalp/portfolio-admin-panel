@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, FormField, Label } from "semantic-ui-react";
 import CopyrightService from "../service/copyrightService";
 
@@ -11,7 +11,7 @@ export default function CopyrightPage() {
         description: ''
     })
 
-    const service = new CopyrightService();
+    const service = useMemo(()=> new CopyrightService(), [])
     
     useEffect(() => {
         service.getCopyright().then(r => {

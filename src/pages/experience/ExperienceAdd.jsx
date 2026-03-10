@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useMemo } from "react";
 import { Button, FormField, Label } from "semantic-ui-react";
 import ExperienceService from "../../service/experienceService";
 
@@ -11,9 +12,10 @@ export default function ExperienceAdd() {
     endDate: ""
   }
 
+  const service = useMemo(()=> new ExperienceService(), []);
+
   function submit(values) {
-    const service = new ExperienceService()
-    service.add(values)
+    service.add(values);
   }
 
   return (

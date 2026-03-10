@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import EducationService from "../../service/educationService";
@@ -6,9 +6,9 @@ import EducationService from "../../service/educationService";
 export default function EducationPage() {
 
   const [educations, setEducations] = useState([]);
+  const service = useMemo(() => new EducationService(), [])
 
   useEffect(() => {
-    const service = new EducationService()
     service.getEducations().then(r => {
       setEducations(r);
     });

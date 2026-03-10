@@ -1,5 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, FormField, Label } from "semantic-ui-react";
 import ExperienceService from "../../service/experienceService";
@@ -14,7 +14,7 @@ export default function ExperienceUpdate() {
     startDate: "",
     endDate: ""
   });
-  const service = new ExperienceService()
+  const service = useMemo(() => new ExperienceService(), []);
 
   useEffect(() => {
     service.getById(id).then(r => {

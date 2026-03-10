@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
+import { useMemo } from "react";
 import { Button, FormField, Label } from "semantic-ui-react";
 import ProjectService from "../../service/projectService";
 
@@ -16,8 +17,9 @@ export default function ProjectAdd() {
     "coverImage": ""
   }
 
+  const service = useMemo(()=> new ProjectService(), [])
+
   function submit(values) {
-    const service = new ProjectService()
     service.add(values)
   }
 
