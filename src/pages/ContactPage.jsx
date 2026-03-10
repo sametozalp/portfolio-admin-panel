@@ -21,7 +21,7 @@ export default function ContactPage() {
         setIsUpdate(true);
       }
     });
-  }, []);
+  }, [service]);
 
   function submit(values) {
     if (isUpdate) {

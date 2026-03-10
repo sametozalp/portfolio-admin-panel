@@ -20,7 +20,7 @@ export default function ExperienceUpdate() {
     service.getById(id).then(r => {
       setExperience(r);
     });
-  }, []);
+  }, [service, id]);
 
   function submit(values) {
     service.update(experience.id, values)

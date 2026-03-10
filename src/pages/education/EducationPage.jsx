@@ -12,7 +12,7 @@ export default function EducationPage() {
     service.getEducations().then(r => {
       setEducations(r);
     });
-  }, []);
+  }, [service]);
 
   return (
     <div>

@@ -21,7 +21,7 @@ export default function EntrancePage() {
         setIsUpdate(true);
       }
     });
-  }, []);
+  }, [service]);
 
   function submit(values) {
     if (isUpdate) {

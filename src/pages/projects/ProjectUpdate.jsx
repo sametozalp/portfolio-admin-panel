@@ -26,7 +26,7 @@ export default function ProjectUpdate() {
     service.getById(id).then(r => {
       setProject(r);
     });
-  }, []);
+  }, [service, id]);
 
   function submit(values) {
     service.update(project.id, values)

@@ -20,7 +20,7 @@ export default function EducationUpdate() {
     service.getById(id).then(r => {
       setEducation(r);
     });
-  }, []);
+  }, [service, id]);
 
   function submit(values) {
     service.update(education.id, values)

@@ -20,7 +20,7 @@ export default function CopyrightPage() {
                 setIsUpdate(true);
             }
         });
-    }, []);
+    }, [service]);
 
     function submit(values) {
         if (isUpdate) {

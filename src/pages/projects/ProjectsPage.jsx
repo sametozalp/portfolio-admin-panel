@@ -12,7 +12,7 @@ export default function ProjectsPage() {
     service.getProjects().then(r => {
       setProjects(r);
     });
-  }, []);
+  }, [service]);
 
   return (
     <div>

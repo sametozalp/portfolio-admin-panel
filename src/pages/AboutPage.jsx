@@ -25,7 +25,7 @@ export default function AboutPage() {
         setIsUpdate(true);
       }
     });
-  }, []);
+  }, [service]);
 
   function submit(values) {
 
