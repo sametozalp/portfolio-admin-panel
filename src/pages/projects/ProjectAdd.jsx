@@ -1,9 +1,18 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import { useMemo } from "react";
-import { Button, FormField, Label } from "semantic-ui-react";
+import { useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, FormField, Icon, Input, Label } from "semantic-ui-react";
 import ProjectService from "../../service/projectService";
 
 export default function ProjectAdd() {
+
+  const [photoInputs, setPhotoInputs] = useState([0]);
+  const photosRef = useRef([]);
+  const navigate = useNavigate();
+
+  const addPhotoInput = () => {
+    setPhotoInputs([...photoInputs, photoInputs.length]);
+  };
 
   let initialValue = {
     "title": "",
@@ -13,14 +22,15 @@ export default function ProjectAdd() {
     "projectDate": "",
     "techStack": "",
     "liveDemoUrl": "",
-    "sourceCodeUrl": "",
-    "coverImage": ""
+    "sourceCodeUrl": ""
   }
 
-  const service = useMemo(()=> new ProjectService(), [])
+  const service = useMemo(() => new ProjectService(), [])
 
   function submit(values) {
-    service.add(values)
+    service.add(values, photosRef.current).then(r=> {
+      navigate("/admin/projects");
+    })
   }
 
   return (
@@ -44,14 +54,14 @@ export default function ProjectAdd() {
           </FormField>
 
           <FormField>
-            <Field name="description" placeholder="Açıklama"></Field>
+            <Field as="textarea" name="description" placeholder="Açıklama"></Field>
             <ErrorMessage name="description" render={error =>
               <Label pointing basic color="red" content={error}></Label>
             }></ErrorMessage>
           </FormField>
 
           <FormField>
-            <Field name="features" placeholder="Proje Özellikleri"></Field>
+            <Field as="textarea" name="features" placeholder="Proje Özellikleri"></Field>
             <ErrorMessage name="features" render={error =>
               <Label pointing basic color="red" content={error}></Label>
             }></ErrorMessage>
@@ -85,13 +95,24 @@ export default function ProjectAdd() {
             }></ErrorMessage>
           </FormField>
 
-          <FormField>
-            <Field name="coverImage" placeholder="Kapak Resmi"></Field>
-            <ErrorMessage name="coverImage" render={error =>
-              <Label pointing basic color="red" content={error}></Label>
-            }></ErrorMessage>
-          </FormField>
-
+          {photoInputs.map((i) => (
+            <FormField key={i} style={{ marginTop: "20px" }}>
+              <Input>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    if (e.currentTarget.files && e.currentTarget.files[0]) {
+                      photosRef.current[i] = e.currentTarget.files[0];
+                    }
+                  }}
+                />
+                <Button type="button" icon onClick={addPhotoInput}>
+                  <Icon name="plus" />
+                </Button>
+              </Input>
+            </FormField>
+          ))}
           <Button color="green" type="submit">Ekle</Button>
         </Form>
       </Formik>
