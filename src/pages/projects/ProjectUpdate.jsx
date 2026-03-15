@@ -41,6 +41,14 @@ export default function ProjectUpdate() {
       projectImageservice.delete(id).then(() => getProjectData())
   }
 
+  function handleUpOrderNumber(id) {
+    projectImageservice.upOrderNumber(id).then(() => getProjectData());
+  }
+
+  function handleDownOrderNumber(id) {
+    projectImageservice.downOrderNumber(id).then(() => getProjectData());
+  }
+
   return (
     <div>
       <p className="page-title">Projeyi Güncelle</p>
@@ -115,8 +123,8 @@ export default function ProjectUpdate() {
             project.images?.map((img, index) => (
               <FormField key={index} className="update-image-row">
                 <Label>Sıra Numarası: {img.orderNumber}</Label>
-                <Button><Icon name="chevron down" /></Button>
-                <Button><Icon name="chevron up" /></Button>
+                <Button onClick={()=> handleDownOrderNumber(img.id)}><Icon name="chevron down" /></Button>
+                <Button onClick={()=> handleUpOrderNumber(img.id)}><Icon name="chevron up" /></Button>
                 <Image
                   src={img.url || '/images/image.png'}
                   size='medium'
