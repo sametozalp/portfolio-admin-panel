@@ -53,6 +53,10 @@ export default function ProjectUpdate() {
     projectImageservice.setCoverImage(id).then(() => getProjectData());
   }
 
+  function handleSetShowableImage(id, value) {
+    projectImageservice.setShowableImage(id, value).then(() => getProjectData());
+  }
+
   return (
     <div>
       <p className="page-title">Projeyi Güncelle</p>
@@ -122,7 +126,7 @@ export default function ProjectUpdate() {
         initialValues={{ images: project.images || [] }}
         enableReinitialize
       >
-        <Form className="ui form">
+        <Form className="ui form" >
           {
             project.images?.map((img, index) => (
               <FormField key={index} className="update-image-row">
@@ -134,8 +138,9 @@ export default function ProjectUpdate() {
                   size='medium'
                   style={{ width: '150px', height: '100px', objectFit: 'cover' }}
                 />
-                <Checkbox label={{ children: 'Make cover image' }} checked={img.isCoverImage} onChange={(e, data) => handleSetCoverImage(img.id)} />
+                <Checkbox label={{ children: 'Kapak resmi yap' }} checked={img.isCoverImage} onChange={(e, data) => handleSetCoverImage(img.id)} />
                 <Button content="Sil" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProjectImage(img.id)} />
+                <Checkbox label={{ children: 'Gizle' }} checked={!img.showable} onChange={(e, data) => handleSetShowableImage(img.id, !img.showable)} />
               </FormField>
             ))
           }

@@ -21,4 +21,11 @@ export default class ProjectImageService {
         const res = await api.post("/projectImages/" + id + "/setCoverImage");
         return res.data;
     }
+
+    async setShowableImage(id, value) {
+        const res = await api.post(
+            "/projectImages/" + id + "/setShowableImage", value, { headers: { "Content-Type": "application/json" } }
+        );
+        return res.data;
+    }
 }
