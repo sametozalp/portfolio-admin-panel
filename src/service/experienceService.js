@@ -21,4 +21,13 @@ export default class ExperienceService {
         const response = await api.put("/experience/" + id, value);
         return response.data;
     }
+
+    async setShowableImage(id, value) {
+        console.log("id: " + id);
+        console.log("value: " + value);
+        const res = await api.post(
+            "/experience/" + id + "/setShowableImage", value, { headers: { "Content-Type": "application/json" } }
+        );
+        return res.data;
+    }
 }

@@ -21,4 +21,13 @@ export default class EducationService {
         const response = await api.post("/education", value);
         return response.data;
     }
+
+    async setShowableImage(id, value) {
+        console.log("id: " + id);
+        console.log("value: " + value);
+        const res = await api.post(
+            "/education/" + id + "/setShowableImage", value, { headers: { "Content-Type": "application/json" } }
+        );
+        return res.data;
+    }
 }

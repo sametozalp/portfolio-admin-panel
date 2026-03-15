@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import { Button, Checkbox, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import EducationService from "../../service/educationService";
 
 export default function EducationPage() {
@@ -9,10 +9,18 @@ export default function EducationPage() {
   const service = useMemo(() => new EducationService(), [])
 
   useEffect(() => {
+    getData();
+  }, []);
+
+  function getData() {
     service.getEducations().then(r => {
       setEducations(r);
     });
-  }, [service]);
+  }
+
+  function handleSetShowableImage(id, value) {
+    service.setShowableImage(id, value).then(() => getData());
+  }
 
   return (
     <div>
@@ -39,9 +47,10 @@ export default function EducationPage() {
               <TableCell>{e.description.substring(0, 30)}...</TableCell>
               <TableCell>{e.startDate}</TableCell>
               <TableCell>{e.endDate}</TableCell>
-              <TableCell>
+              <TableCell className="table-action-style">
                 <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
                 <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" />
+                <Checkbox label={{ children: 'Gizle' }} checked={!e.showable} onChange={(z, data) => handleSetShowableImage(e.id, !e.showable)} />
               </TableCell>
             </TableRow>
           ))}

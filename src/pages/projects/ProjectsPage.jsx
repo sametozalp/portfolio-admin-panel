@@ -51,12 +51,10 @@ export default function ProjectsPage() {
               <TableCell>{e.title}</TableCell>
               <TableCell>{e.summary}</TableCell>
               <TableCell>{e.description.substring(0, 30)}...</TableCell>
-              <TableCell>
-                <div className="table-action-style">
-                  <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
-                  <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProject(e.id)} />
-                  <Checkbox label={{ children: 'Gizle' }} checked={!e.showable} onChange={(z, data) => handleSetShowableImage(e.id, !e.showable)} />
-                </div>
+              <TableCell className="table-action-style">
+                <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
+                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProject(e.id)} />
+                <Checkbox label={{ children: 'Gizle' }} checked={!e.showable} onChange={(z, data) => handleSetShowableImage(e.id, !e.showable)} />
               </TableCell>
             </TableRow>
           ))}
