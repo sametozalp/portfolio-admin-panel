@@ -57,6 +57,10 @@ export default function ProjectUpdate() {
     projectImageservice.setShowableImage(id, value).then(() => getProjectData());
   }
 
+  function handleUploadImage(id, file) {
+    service.addProjectImage(id, file).then(() => getProjectData());
+  }
+
   return (
     <div>
       <p className="page-title">Projeyi Güncelle</p>
@@ -122,6 +126,8 @@ export default function ProjectUpdate() {
         </Form>
       </Formik>
 
+      <p className="page-title" style={{ marginTop: "40px" }}>Proje Resimlerini Düzenle</p>
+
       <Formik
         initialValues={{ images: project.images || [] }}
         enableReinitialize
@@ -145,17 +151,19 @@ export default function ProjectUpdate() {
             ))
           }
 
-          {/* <FormField style={{ marginTop: "20px" }}>
+          <p className="page-title" style={{ marginTop: "40px" }}>Proje Resmi Ekle</p>
+
+          <FormField style={{ marginTop: "20px" }}>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => {
                 if (e.currentTarget.files && e.currentTarget.files[0]) {
-                  //newPhoto.current = e.currentTarget.files[0];
+                  handleUploadImage(project.id, e.currentTarget.files[0]);
                 }
               }}
             />
-          </FormField> */}
+          </FormField>
         </Form>
       </Formik>
     </div>

@@ -60,6 +60,13 @@ export default class ProjectService {
         return response.data;
     }
 
+    async addProjectImage(id, file) {
+        const formData = new FormData();
+        formData.append("image", file);
+        const response = await api.post("/project/" + id + "/projectImage", formData);
+        return response.data;
+    }
+
     async delete(id) {
         const res = await api.delete("/project/" + id);
         return res.data;
