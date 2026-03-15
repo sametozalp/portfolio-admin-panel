@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
+import { Button, Checkbox, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow } from "semantic-ui-react";
 import ProjectService from "../../service/projectService";
 
 export default function ProjectsPage() {
@@ -15,13 +15,17 @@ export default function ProjectsPage() {
   function handleDeleteProject(id) {
     const isConfirmed = window.confirm("Silmek istediğine emin misin ?")
     if (isConfirmed)
-      service.delete(id).then(()=>getData());
+      service.delete(id).then(() => getData());
   }
 
   function getData() {
     service.getProjects().then(r => {
       setProjects(r);
     });
+  }
+
+  function handleSetShowableImage(id, value) {
+    service.setShowableImage(id, value).then(() => getData());
   }
 
   return (
@@ -48,8 +52,11 @@ export default function ProjectsPage() {
               <TableCell>{e.summary}</TableCell>
               <TableCell>{e.description.substring(0, 30)}...</TableCell>
               <TableCell>
-                <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
-                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProject(e.id)} />
+                <div className="table-action-style">
+                  <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
+                  <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProject(e.id)} />
+                  <Checkbox label={{ children: 'Gizle' }} checked={!e.showable} onChange={(z, data) => handleSetShowableImage(e.id, !e.showable)} />
+                </div>
               </TableCell>
             </TableRow>
           ))}

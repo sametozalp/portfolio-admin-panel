@@ -17,6 +17,15 @@ export default class ProjectService {
         return response.data;
     }
 
+    async setShowableImage(id, value) {
+        console.log("id: " + id);
+        console.log("value: " + value);
+        const res = await api.post(
+            "/project/" + id + "/setShowableImage", value, { headers: { "Content-Type": "application/json" } }
+        );
+        return res.data;
+    }
+
     // async add(value, files) {
     //     const formData = new FormData();
     //     formData.append("request", JSON.stringify(value));
