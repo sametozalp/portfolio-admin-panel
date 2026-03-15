@@ -49,6 +49,10 @@ export default function ProjectUpdate() {
     projectImageservice.downOrderNumber(id).then(() => getProjectData());
   }
 
+  function handleSetCoverImage(id) {
+    projectImageservice.setCoverImage(id).then(() => getProjectData());
+  }
+
   return (
     <div>
       <p className="page-title">Projeyi Güncelle</p>
@@ -123,14 +127,14 @@ export default function ProjectUpdate() {
             project.images?.map((img, index) => (
               <FormField key={index} className="update-image-row">
                 <Label>Sıra Numarası: {img.orderNumber}</Label>
-                <Button onClick={()=> handleDownOrderNumber(img.id)}><Icon name="chevron down" /></Button>
-                <Button onClick={()=> handleUpOrderNumber(img.id)}><Icon name="chevron up" /></Button>
+                <Button onClick={() => handleDownOrderNumber(img.id)}><Icon name="chevron down" /></Button>
+                <Button onClick={() => handleUpOrderNumber(img.id)}><Icon name="chevron up" /></Button>
                 <Image
                   src={img.url || '/images/image.png'}
                   size='medium'
                   style={{ width: '150px', height: '100px', objectFit: 'cover' }}
                 />
-                <Checkbox label={{ children: 'Make cover image' }} checked={true}  /*onChange={(e, data) => setIsCover(data.checked)}*/ />
+                <Checkbox label={{ children: 'Make cover image' }} checked={img.isCoverImage} onChange={(e, data) => handleSetCoverImage(img.id)} />
                 <Button content="Sil" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProjectImage(img.id)} />
               </FormField>
             ))

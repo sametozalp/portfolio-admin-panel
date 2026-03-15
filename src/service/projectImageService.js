@@ -16,4 +16,9 @@ export default class ProjectImageService {
         const res = await api.post("/projectImages/" + id + "/downOrderNumber");
         return res.data;
     }
+
+    async setCoverImage(id) {
+        const res = await api.post("/projectImages/" + id + "/setCoverImage");
+        return res.data;
+    }
 }
