@@ -2,6 +2,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button, Checkbox, FormField, Icon, Image, Label } from "semantic-ui-react";
+import ProjectImageService from "../../service/projectImageService";
 import ProjectService from "../../service/projectService";
 
 export default function ProjectUpdate() {
@@ -18,22 +19,33 @@ export default function ProjectUpdate() {
     "sourceCodeUrl": ""
   });
   const service = useMemo(() => new ProjectService(), [])
+  const projectImageservice = useMemo(() => new ProjectImageService(), [])
 
   useEffect(() => {
+    getProjectData();
+  }, []);
+
+  function getProjectData() {
     service.getById(id).then(r => {
       setProject(r);
     });
-  }, [service, id]);
+  }
 
-  function submit(values) {
+  function handleUpdateProject(values) {
     service.update(project.id, values);
+  }
+
+  function handleDeleteProjectImage(id) {
+    const isConfirmed = window.confirm("Emin misin ?");
+    if (isConfirmed)
+      projectImageservice.delete(id).then(() => getProjectData())
   }
 
   return (
     <div>
       <p className="page-title">Projeyi Güncelle</p>
 
-      <Formik initialValues={project} onSubmit={(values, { resetForm }) => { submit(values) }} enableReinitialize>
+      <Formik initialValues={project} onSubmit={(values, { resetForm }) => { handleUpdateProject(values) }} enableReinitialize>
         <Form className="ui form">
           <FormField>
             <Field name="title" placeholder="Proje başlığı"></Field>
@@ -95,6 +107,7 @@ export default function ProjectUpdate() {
       </Formik>
 
       <Formik
+        initialValues={{ images: project.images || [] }}
         enableReinitialize
       >
         <Form className="ui form">
@@ -110,7 +123,7 @@ export default function ProjectUpdate() {
                   style={{ width: '150px', height: '100px', objectFit: 'cover' }}
                 />
                 <Checkbox label={{ children: 'Make cover image' }} checked={true}  /*onChange={(e, data) => setIsCover(data.checked)}*/ />
-                <Button content="Sil" icon="trash" labelPosition="left" size="mini" color="red" /*onClick={() => handleDeleteProject(e.id)}*/ />
+                <Button content="Sil" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProjectImage(img.id)} />
               </FormField>
             ))
           }
