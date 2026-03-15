@@ -118,10 +118,39 @@
   /* Hafif yuvarlak köşe */
 }
 
-.update-image-row {
+/* .update-image-row {
   display: flex;
   align-items: center;
   gap: 20px;
+  background-color: beige;
+  padding: 20px;
+  margin-top: 20px !important;
+  border-radius: 10px;
+} */
+
+.update-image-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  background-color: #fdf5e6; /* Daha soft beige */
+  padding: 15px;
+  margin-top: 20px !important;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+@media (min-width: 768px) {
+  .update-image-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .update-image-row img {
+    width: 150px;
+    height: 100px;
+  }
 }
 
 .table-action-style {

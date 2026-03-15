@@ -6,11 +6,11 @@ export default function AdminDashboard() {
     return (
         <Grid columns={2} divided className='admin-dashboard' stackable>
             <Grid.Row>
-                <Grid.Column width={4}>
+                <Grid.Column width={3}>
                     <p>Admin Panel</p>
                     <AdminMenu />
                 </Grid.Column>
-                <Grid.Column width={12}>
+                <Grid.Column width={13}>
                     <div className='admin-content'>
                         <AdminRouter />
                     </div>
