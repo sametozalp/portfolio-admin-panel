@@ -6,13 +6,23 @@ import ProjectService from "../../service/projectService";
 export default function ProjectsPage() {
 
   const [projects, setProjects] = useState([]);
-  const service = useMemo(()=> new ProjectService(), [])
+  const service = useMemo(() => new ProjectService(), [])
 
   useEffect(() => {
+    getData();
+  }, []);
+
+  function handleDeleteProject(id) {
+    const isConfirmed = window.confirm("Silmek istediğine emin misin ?")
+    if (isConfirmed)
+      service.delete(id).then(()=>getData());
+  }
+
+  function getData() {
     service.getProjects().then(r => {
       setProjects(r);
     });
-  }, [service]);
+  }
 
   return (
     <div>
@@ -22,6 +32,7 @@ export default function ProjectsPage() {
       <Table singleLine>
         <TableHeader>
           <TableRow>
+            <TableHeaderCell></TableHeaderCell>
             <TableHeaderCell>Adı</TableHeaderCell>
             <TableHeaderCell>Özeti</TableHeaderCell>
             <TableHeaderCell>Açıklama</TableHeaderCell>
@@ -32,12 +43,13 @@ export default function ProjectsPage() {
         <TableBody>
           {projects.map((e, index) => (
             <TableRow>
+              <TableCell>{index + 1}</TableCell>
               <TableCell>{e.title}</TableCell>
               <TableCell>{e.summary}</TableCell>
               <TableCell>{e.description.substring(0, 30)}...</TableCell>
               <TableCell>
                 <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
-                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" />
+                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteProject(e.id)} />
               </TableCell>
             </TableRow>
           ))}

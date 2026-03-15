@@ -29,7 +29,7 @@ export default class ProjectService {
     //     const response = await api.post("/project", formData);
     //     return response.data;
     // }
-    
+
     async add(value, files) {
         const formData = new FormData();
 
@@ -49,5 +49,10 @@ export default class ProjectService {
         // yazmana gerek yoktur, tarayıcı boundary ile birlikte otomatik ekler.
         const response = await api.post("/project", formData);
         return response.data;
+    }
+
+    async delete(id) {
+        const res = await api.delete("/project/" + id);
+        return res.data;
     }
 }
