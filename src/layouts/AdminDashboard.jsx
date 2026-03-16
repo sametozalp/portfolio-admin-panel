@@ -5,7 +5,7 @@ import AdminMenu from './AdminMenu'
 
 export default function AdminDashboard() {
     return (
-        <Grid columns={2} divided className='admin-dashboard' stackable>
+        <Grid columns={3} divided className='admin-dashboard' stackable>
             <Grid.Row>
                 <Grid.Column width={2} className="admin-menu-column">
                     <NavLink to="/admin" className="admin-panel-title">
@@ -14,7 +14,7 @@ export default function AdminDashboard() {
                     <AdminMenu />
                 </Grid.Column>
 
-                <Grid.Column width={14} className="admin-content-column">
+                <Grid.Column width={13}>
                     <AdminRouter />
                 </Grid.Column>
             </Grid.Row>
