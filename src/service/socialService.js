@@ -3,7 +3,12 @@ import api from "../api/api";
 export default class SocialService {
 
     async getSocials() {
-        const res = await api.get("/social");
+        const res = await api.get("/social/all");
+        return res.data;
+    }
+
+    async getSocial(id) {
+        const res = await api.get("/social/" + id);
         return res.data;
     }
 
@@ -13,7 +18,7 @@ export default class SocialService {
     }
 
     async update(id, value) {
-        const res = await api.post("/social/" + id, value);
+        const res = await api.put("/social/" + id, value);
         return res.data;
     }
 
@@ -27,9 +32,9 @@ export default class SocialService {
         return res.data;
     }
 
-    async setShowableImage(id, value) {
+    async setShowable(id, value) {
         const res = await api.post(
-            "/social/" + id + "/setShowableImage", value, { headers: { "Content-Type": "application/json" } }
+            "/social/" + id + "/setShowable", value, { headers: { "Content-Type": "application/json" } }
         );
         return res.data;
     }

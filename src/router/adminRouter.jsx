@@ -13,6 +13,9 @@ import ProfileImagePage from "../pages/ProfileImagePage";
 import ProjectsAdd from "../pages/projects/ProjectAdd";
 import ProjectsPage from "../pages/projects/ProjectsPage";
 import ProjectsUpdate from "../pages/projects/ProjectUpdate";
+import SocialAdd from "../pages/social/SocialAdd";
+import SocialPage from "../pages/social/SocialPage";
+import SocialUpdate from "../pages/social/SocialUpdate";
 
 export default function AdminRouter() {
   return (
@@ -32,6 +35,10 @@ export default function AdminRouter() {
         <Route path="/education" element={<EducationPage />} />
         <Route path="/education/add" element={<EducationAdd />} />
         <Route path="/education/update/:id" element={<EducationUpdate />} />
+
+        <Route path="/social" element={<SocialPage />} />
+        <Route path="/social/add" element={<SocialAdd />} />
+        <Route path="/social/update/:id" element={<SocialUpdate />} />
         
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/copyright" element={<CopyrightPage />} />

@@ -30,6 +30,10 @@ export default function AdminMenu() {
                 as={NavLink} to="/admin/education"
             />
             <MenuItem
+                name='Sosyal Medya'
+                as={NavLink} to="/admin/social"
+            />
+            <MenuItem
                 name='İletişim'
                 as={NavLink} to="/admin/contact"
             />
