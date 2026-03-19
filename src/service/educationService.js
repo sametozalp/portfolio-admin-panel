@@ -30,4 +30,9 @@ export default class EducationService {
         );
         return res.data;
     }
+
+    async delete(id) {
+        const res = await api.delete("/education/" + id);
+        return res.data;
+    }
 }

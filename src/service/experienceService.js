@@ -30,4 +30,9 @@ export default class ExperienceService {
         );
         return res.data;
     }
+
+    async delete(id) {
+        const res = await api.delete("/experience/" + id);
+        return res.data;
+    }
 }

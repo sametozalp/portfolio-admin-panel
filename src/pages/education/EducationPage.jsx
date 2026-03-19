@@ -22,6 +22,12 @@ export default function EducationPage() {
     service.setShowableImage(id, value).then(() => getData());
   }
 
+  function handleDeleteButton(id) {
+    const isConfirmed = window.confirm("Silmek istediğinde emin misin ?");
+    if (isConfirmed)
+      service.delete(id).then(() => getData());
+  }
+
   return (
     <div>
       <p className="page-title">Eğitimleri Yönet</p>
@@ -49,7 +55,7 @@ export default function EducationPage() {
               <TableCell>{e.endDate}</TableCell>
               <TableCell className="table-action-style">
                 <Button content="Update" icon="edit" labelPosition="left" size="mini" style={{ marginRight: "0.5rem" }} as={NavLink} to={"update/" + e.id} />
-                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" />
+                <Button content="Delete" icon="trash" labelPosition="left" size="mini" color="red" onClick={() => handleDeleteButton(e.id)} />
                 <Checkbox label={{ children: 'Gizle' }} checked={!e.showable} onChange={(z, data) => handleSetShowableImage(e.id, !e.showable)} />
               </TableCell>
             </TableRow>
