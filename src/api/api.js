@@ -7,12 +7,17 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
+
+    if (config.url?.includes("/login")) {
+      return config;
+    }
+
     const token = localStorage.getItem("accessToken");
 
     if (token)
       config.headers.Authorization = `Bearer ${token}`;
     else
-      window.location.pathname="/login";
+      window.location.pathname = "/login";
     return config;
   },
   (error) => Promise.reject(error)
