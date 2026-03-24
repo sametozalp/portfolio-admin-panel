@@ -1,38 +1,42 @@
 
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Button, FormField, Label } from 'semantic-ui-react';
 import * as Yup from 'yup';
 import LoginService from '../service/loginService';
+import { addToken, removeToken } from '../store/actions/tokenActions';
 
 export default function LoginPage() {
 
   const navigate = useNavigate();
+
+  const token = useSelector(state => state?.token)
+  const dispatch = useDispatch();
 
   let initialLoginValues = {
     username: '',
     password: ''
   }
 
-  const service = useMemo(() => new LoginService(), [])
+  const service = useMemo(() => new LoginService(), []);
 
   useEffect(() => {
-    const savedAccessToken = localStorage.getItem("accessToken");
-    if (savedAccessToken) {
-      service.validateToken(savedAccessToken).then((res) => {
+    if (token) {
+      service.validateToken(token).then((res) => {
         if (res.status === 200)
-          navigate("/admin")
+          navigate("/admin");
         else
-          localStorage.removeItem("accessToken");
+          dispatch(removeToken());
       });
     }
-  }, [])
+  }, [token, service, navigate, dispatch])
 
   function handleLoginButton(values) {
     service.login(values).then((res) => {
       if (res.status === 200) {
-        localStorage.setItem("accessToken", res.data);
+        dispatch(addToken(res.data))
         navigate("/admin");
       }
     });

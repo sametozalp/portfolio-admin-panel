@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import store from "../store/configureStore";
 
 const api = axios.create({
   baseURL: "http://localhost:8080/api"
@@ -12,7 +13,8 @@ api.interceptors.request.use(
       return config;
     }
 
-    const token = localStorage.getItem("accessToken");
+    const state = store.getState();
+    const token = state.token;
 
     if (token)
       config.headers.Authorization = `Bearer ${token}`;
@@ -31,7 +33,7 @@ api.interceptors.response.use(
   (error) => {
 
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem("accessToken");
+      store.dispatch({ type: "REMOVE_ACCESS_TOKEN", payload: null });
       window.location.href = "/login";
       toast.error("Yeniden giriş yapmalısınız..")
     } else {
